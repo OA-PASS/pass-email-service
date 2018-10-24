@@ -1,0 +1,207 @@
+Received: from ESGEBEX6.win.ad.jhu.edu (10.15.89.11) by
+ ESGEBEX7.win.ad.jhu.edu (10.15.89.12) with Microsoft SMTP Server (TLS) id
+ 15.0.1367.3 via Mailbox Transport; Sun, 24 Jun 2018 17:00:10 -0400
+Received: from ESGEBEX11.win.ad.jhu.edu (10.15.89.100) by
+ ESGEBEX6.win.ad.jhu.edu (10.15.89.11) with Microsoft SMTP Server (TLS) id
+ 15.0.1367.3; Sun, 24 Jun 2018 17:00:09 -0400
+Received: from FEMeb1.johnshopkins.edu (162.129.200.201) by
+ ESGEBEX11.win.ad.jhu.edu (10.15.89.100) with Microsoft SMTP Server (TLS) id
+ 15.0.1367.3 via Frontend Transport; Sun, 24 Jun 2018 17:00:09 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by FEMeb1.johnshopkins.edu (Postfix) with SMTP id 41DPp14sT7z2W9wx
+	for <hvu13@exchange.johnshopkins.edu>; Sun, 24 Jun 2018 17:00:09 -0400 (EDT)
+Received: from esgesp26.esg.johnshopkins.edu (esgesp26.esg.johnshopkins.edu [10.181.25.16])
+	by FEMeb1.johnshopkins.edu (Postfix) with ESMTP id 41DPp139lcz2W9x8
+	for <hvu13@exchange.johnshopkins.edu>; Sun, 24 Jun 2018 17:00:09 -0400 (EDT)
+X-Mailbox-Line: From dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com  Sun Jun 24 17:00:09 2018
+Received: from IronEB5.johnshopkins.edu (mtw-ltm1.nts.jhu.edu [10.173.97.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by esp.jh.edu (Postfix) with ESMTPS id 3F98B181349E
+	for <hvu13@exchange.johnshopkins.edu>; Sun, 24 Jun 2018 17:00:09 -0400 (EDT)
+Received-SPF: None (IronEB5.johnshopkins.edu: no sender
+  authenticity information available from domain of
+  nihms-help@ncbi.nlm.nih.gov) identity=pra;
+  client-ip=74.125.82.170; receiver=IronEB5.johnshopkins.edu;
+  envelope-from="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-sender="nihms-help@ncbi.nlm.nih.gov";
+  x-conformance=sidf_compatible
+Received-SPF: Pass (IronEB5.johnshopkins.edu: domain of
+  dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com designates
+  74.125.82.170 as permitted sender) identity=mailfrom;
+  client-ip=74.125.82.170; receiver=IronEB5.johnshopkins.edu;
+  envelope-from="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-sender="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-conformance=sidf_compatible; x-record-type="v=spf1"
+Received-SPF: None (IronEB5.johnshopkins.edu: no sender
+  authenticity information available from domain of
+  postmaster@mail-ot0-f170.google.com) identity=helo;
+  client-ip=74.125.82.170; receiver=IronEB5.johnshopkins.edu;
+  envelope-from="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-sender="postmaster@mail-ot0-f170.google.com";
+  x-conformance=sidf_compatible
+Authentication-Results: IronEB5.johnshopkins.edu; dkim=none (message not signed) header.i=none; spf=None smtp.pra=nihms-help@ncbi.nlm.nih.gov; spf=Pass smtp.mailfrom=dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com; spf=None smtp.helo=postmaster@mail-ot0-f170.google.com; dmarc=fail (p=quarantine dis=none) d=ncbi.nlm.nih.gov
+IronPort-PHdr: =?us-ascii?q?9a23=3A9ccC3BWFur2/BPBnCv6gGXk73t7V8LGtZVwlr6E/?=
+ =?us-ascii?q?grcLSJyIuqrYbBGAt8tkgFKBZ4jH8fUM07OQ7/i9HzRYqb+681k6OKRWUBEEjc?=
+ =?us-ascii?q?hE1ycBO+WiTXPBEfjxciYhF95DXlI2t1uyMExSBdqsLwaK+i764jEdAAjwOhRo?=
+ =?us-ascii?q?LerpBIHSk9631+ev8JHPfglEnjWwba9yIRmssQndqtQdjJd/JKo21hbHuGZDdf?=
+ =?us-ascii?q?5MxWNvK1KTnhL86dm18ZV+7SleuO8v+tBZX6nicKs2UbJXDDI9M2Ao/8LrrgXM?=
+ =?us-ascii?q?TRGO5nQHTGoblAdDDhXf4xH7WpfxtTb6tvZ41SKHM8D6Uaw4VDK/5KhlUh/ojD?=
+ =?us-ascii?q?oMOSA//m/Zl8d8iLtXrAy9qxB6xYPffYObO+dkfq7FctwURXRPUMhMWSNdDY2x?=
+ =?us-ascii?q?dJcPD/MdMepEs4Xxu0UCoB2jDgesHuPvzTpIi2fx0K080uQhEQTG3Bc5E9IOrn?=
+ =?us-ascii?q?vUqM31ObwUUe+p16bIzC/Pb/VS2Tf48oTIdBEhofGWUbJ/dsrR11AiGgXYhVue?=
+ =?us-ascii?q?rozlOima1uULs2WD6epgVOKvh3QoqwF2vDiiwNonhIrRho8NyF3J+j91zJsrKd?=
+ =?us-ascii?q?C4UkJ2YsCoHIFNuyyYK4d6Wt4uT39rtSog1LELt4O3cDIOxZg73RLSafKKfo6V?=
+ =?us-ascii?q?6Rz5TumROy13hHd9dbK/mRmy9U+gx/X5Vsau0VZKqjNJkt7QtnwRzhDT5NWLR/?=
+ =?us-ascii?q?lh8ku71jaP0AfT6u5AIU8qj6bUN5khwrsompoSt0TMADP2lV30gaKZbEko5/ak?=
+ =?us-ascii?q?5uT9brjluJOQLZJ4hwPiPqg2n8ywG+U4MgwAX2iB/uS80aXu8lDjT7VWlPI5jq?=
+ =?us-ascii?q?7ZsJbBJcsFvK65HRVa0oA/5Be/CDupzM4XnXcfI19deBKIlY7pO1HULPDmEPey?=
+ =?us-ascii?q?m1askDd2x/zcILLuH4jNI2PMkLfkZ7l96kpcxBAvwtBY4pJYEqsBL+7rWk/tqN?=
+ =?us-ascii?q?zYCQc0Mwyqw+b6Fdlw2JgTVnyAA6CFMKPdq1mI5u0xLOWWZo8Vvzb9K/4+5/7u?=
+ =?us-ascii?q?in85gVwdfaiv3ZsMcny3AOlpI1jKKUbr14MNGHsDtQ04V+HwllSEWi97aHO7Xq?=
+ =?us-ascii?q?Z67TY+XsbuWZzGR5yt2pSH3Sf9EZpIMDNoEFeJRCPudoWBQLIMZSaKCslqmD1C?=
+ =?us-ascii?q?U7ykDYkg1VehsxGsmOkvFfbd5iBN7cGr79Ny/eCG0EtqrG0mP4Gmy2iIClpMsC?=
+ =?us-ascii?q?YNTj4y0rp4pBUkmFiG2Kl8xfdfEI4Kvq8bYkIBLZfZitdCJZXqQAuYLoWPQ1yn?=
+ =?us-ascii?q?BNOiBHc3T9J3zNgQMR4kRoeSyyvb1i/vOIc70ryGAJturPDZ1nn1YsFhkzPIjf?=
+ =?us-ascii?q?Z5yVYhRcRLOCutgastrwU=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0GKAAC4BTBbh6pSfUpZAxsBAQEBAwEBA?=
+ =?us-ascii?q?QkBAQGDHydlbQMHMIt9YItggWOVLBSBK0YTEAuBAoZCGQcBBDAYAQIBAQEBAQE?=
+ =?us-ascii?q?BAQEBAhABAQEIDQkIKSMMgjUkCwRLKTIBAQEBAQEBAQEBAQEBAQEBAQEBAQEVA?=
+ =?us-ascii?q?iIRIwEyKAQ1Qg8GGwQlAQUBIgE0gkFCAYF/BQqgaDyBQYtjiEGBAgkBCIhaghW?=
+ =?us-ascii?q?BDzOEHQqBTQQYgQ4FARIBCloCCIJjgiQCh2WRSgmFfoVUgzQLgUAdg2mIA4okh?=
+ =?us-ascii?q?EABgmECBAIEBQIFDyGBIIEacSsKQYMzCYIDFxeFRIhvUwEBjCENFQKCIgEB?=
+X-IPAS-Result: =?us-ascii?q?A0GKAAC4BTBbh6pSfUpZAxsBAQEBAwEBAQkBAQGDHydlbQM?=
+ =?us-ascii?q?HMIt9YItggWOVLBSBK0YTEAuBAoZCGQcBBDAYAQIBAQEBAQEBAQEBAhABAQEID?=
+ =?us-ascii?q?QkIKSMMgjUkCwRLKTIBAQEBAQEBAQEBAQEBAQEBAQEBAQEVAiIRIwEyKAQ1Qg8?=
+ =?us-ascii?q?GGwQlAQUBIgE0gkFCAYF/BQqgaDyBQYtjiEGBAgkBCIhaghWBDzOEHQqBTQQYg?=
+ =?us-ascii?q?Q4FARIBCloCCIJjgiQCh2WRSgmFfoVUgzQLgUAdg2mIA4okhEABgmECBAIEBQI?=
+ =?us-ascii?q?FDyGBIIEacSsKQYMzCYIDFxeFRIhvUwEBjCENFQKCIgEB?=
+X-IronPort-AV: E=Sophos;i="5.51,267,1526356800";
+   d="scan'208";a="166834382"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from mail-ot0-f170.google.com ([74.125.82.170])
+  by IronEB5.johnshopkins.edu with ESMTP/TLS/AES128-GCM-SHA256; 24 Jun 2018 17:00:08 -0400
+Received: by mail-ot0-f170.google.com with SMTP id w16-v6so4266612otk.5
+        for <hanh.vu@jhu.edu>; Sun, 24 Jun 2018 14:00:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-original-authentication-results:x-gm-message-state:delivered-to
+         :mime-version:from:to:date:subject:content-transfer-encoding
+         :message-id;
+        bh=yso5OkKvMYl/c+WvL7YDacJLLv+0cfczZjHP0N+unx0=;
+        b=NItX3R1IceLvZgWDZIZBzxnXWK2h4/C1ASzv4ANTDwuQI6/VLXi9CVHbHMCxCEI4BE
+         ubFD3pMp7UoIM7BELY5H8zEB+Wi5Q8X/xgVU43WKYrirxJkLuxktZf8B8WHdb196/on/
+         B8oxOLqx8dPDjFZU+SIED2tfxo4LJUPDn2uZm0wvtrBJ/NCXn9RDpenkAx3icDHjoVjN
+         f8tVOTlyyyR3b7kB33NJqmpXtB2jDiD1QpICZTn+5tNBvZyrN31lx+VBKL77+8jlhFH4
+         k9v7ilTL71hglas24zJbRNsQEeHtr5PwBt6QR0ZDcaN5kPBgxCmgHo/Zln+AwRRJFvRt
+         T5JQ==
+X-Original-Authentication-Results: mx.google.com;       spf=pass (google.com: domain of nihms-help@ncbi.nlm.nih.gov designates 128.231.90.125 as permitted sender) smtp.mailfrom=nihms-help@ncbi.nlm.nih.gov;       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ncbi.nlm.nih.gov
+X-Gm-Message-State: APt69E0cA5r45G8qRUc9A4jFuYmGjeoip0NBHnSTuilirGfRNuzENpKv
+	dgn3uw1Ezz4HgBe1lcRjEb+9ZuhumEV1pBBEQ4r7QsDliV4ERK8=
+X-Received: by 2002:a9d:72dd:: with SMTP id d29-v6mr6292119otk.345.1529874007778;
+        Sun, 24 Jun 2018 14:00:07 -0700 (PDT)
+X-Forwarded-To: hanh.vu@jhu.edu
+X-Forwarded-For: dataconservancy@gmail.com hanh.vu@jhu.edu
+Delivered-To: dataconservancy@gmail.com
+Received: by 2002:ac9:3987:0:0:0:0:0 with SMTP id y7-v6csp71158oce;
+        Sun, 24 Jun 2018 14:00:07 -0700 (PDT)
+X-Google-Smtp-Source: AAOMgpfVi18vpilhw2dsDTUSUEsOPHMatvUnum2vlrbiiyTK1nOw95pw5SxgYkH7FxB6e57CvaXN
+X-Received: by 2002:ac8:329c:: with SMTP id z28-v6mr2551616qta.330.1529874006966;
+        Sun, 24 Jun 2018 14:00:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1529874006; cv=none;
+        d=google.com; s=arc-20160816;
+        b=Bt6t2VuCuqaV9HHWcmgkCn5x8ncvOrT6LJt1ZUrBqz4tRaxQlhnumPBLe4CeOaz1Fj
+         N7kFtKt6qj+yG1xCmxH1eqXQQgPjLRnQ1WzpPzFgdhZoilDkOQK2Elipv0+8rxdB9grb
+         9r8Y182BOxs1WCPVC8bxXaXyKoIK9dsert9/rtGL5ZvoQSP8Lmfp9SprMTgb5unsp3OC
+         7eEc1VxxDJmvt9bfGfE/OLMxvy3Osa8EyJqaOutCNzUh0nkwFIPV002eY7ixMmkXu1vA
+         jlTT53ju/LFzwmFl9aso8qc2gaIDpHabJbGGcQTWUFykhRjE+YXxwENn78supZS6WlHW
+         9fTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=message-id:content-transfer-encoding:subject:date:to:from
+         :mime-version:arc-authentication-results;
+        bh=yso5OkKvMYl/c+WvL7YDacJLLv+0cfczZjHP0N+unx0=;
+        b=smkTPOKB1ZnBroG3cM7Fe4tt/vWP/e+OcBTwWaRct+nmI/y4hH463Ba7B1zrAga8St
+         D9uHiIJShAYeIT4DaHGVvKID1CYcP0nmg7CHI0eyE+HB3hCWLMX6BX38EHlkfja8ih1/
+         R6S3cvSW05C7bfyT2nPwcJUa9Ns0F8eg//A+7ukW3q02U7ICm4T8OBOf067E/jEm90MI
+         PaqB6ZAq78iV02CpvRxi8mSFel0gp2mszt3OLbIHNSCfj1FHV8EQOef6pgw1/j3vUjbw
+         qEuj1jUjaXvaS32wVU7f8Lt0G3t0UIstt1vO8zHrdxdsxcbYyUFjIkR5FuHOs29x8EEO
+         dQ9g==
+ARC-Authentication-Results: i=1; mx.google.com;
+       spf=pass (google.com: domain of nihms-help@ncbi.nlm.nih.gov designates 128.231.90.125 as permitted sender) smtp.mailfrom=nihms-help@ncbi.nlm.nih.gov;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ncbi.nlm.nih.gov
+Received: from nihcesxway3.hub.nih.gov (nihcesxway3.hub.nih.gov. [128.231.90.125])
+        by mx.google.com with ESMTPS id m20-v6si12728077qvl.87.2018.06.24.14.00.06
+        for <dataconservancy@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Jun 2018 14:00:06 -0700 (PDT)
+X-SBRS-Extended: Low
+X-IronPortListener: ces-out
+X-IronPort-AV: E=Sophos;i="5.51,267,1526356800";
+   d="scan'208";a="15796710"
+Received: from uccbx04.nih.gov (HELO ces.nih.gov) ([156.40.79.154])
+  by nihcesxway3.hub.nih.gov with ESMTP; 24 Jun 2018 17:00:06 -0400
+Received: from nihxwaye3as04.hub.nih.gov (165.112.13.43) by uccbx04.nih.gov
+ (156.40.79.154) with Microsoft SMTP Server (TLS) id 15.0.1367.3; Sun, 24 Jun
+ 2018 17:00:06 -0400
+X-SBRS-Extended: Low
+X-IronPortListener: non-ces-out
+X-IronPort-AV: E=Sophos;i="5.51,267,1526356800";
+   d="scan'208";a="13207689"
+Received: from nihsmtpxwayb02.hub.nih.gov (HELO mail1.ncbi.nlm.nih.gov) ([128.231.90.73])
+  by nihsmtpxwayst04.hub.nih.gov with ESMTP; 24 Jun 2018 17:00:04 -0400
+Received: from MSSQL112 (mssql112.be-md.ncbi.nlm.nih.gov [10.10.127.112])
+	by mail1.ncbi.nlm.nih.gov (Postfix) with ESMTP id C5D04340004;
+	Sun, 24 Jun 2018 17:00:04 -0400 (EDT)
+MIME-Version: 1.0
+From: <nihms-help@ncbi.nlm.nih.gov>
+To: <dataconservancy@gmail.com>, <smith2@nih.gov>
+Date: Sun, 24 Jun 2018 17:00:04 -0400
+Subject: [nihms/test] MSREFID1861125: Unable to generate PDF
+Message-ID: <20180624210004.C5D04340004@mail1.ncbi.nlm.nih.gov>
+X-Exchange-ASBP: 1
+Return-Path: dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com
+X-MS-Exchange-Organization-Network-Message-Id: cb999a22-2c5d-4143-2349-08d5da1578d7
+X-MS-Exchange-Organization-AVStamp-Enterprise: 1.0
+X-MS-Exchange-Organization-AuthSource: ESGEBEX11.win.ad.jhu.edu
+X-MS-Exchange-Organization-AuthAs: Anonymous
+Content-type: text/plain;
+	charset="UTF-8"
+Content-transfer-encoding: 7bit
+
+
+
+"Progesterone induces adult mammary stem cell expansion" (MSREFID1861125)
+
+
+[NOTICE: This is an automated message from the NIH Manuscript Submission (NIHMS) system. To contact NIHMS staff, please go to https://preview.nihms.nih.gov/db/sub.cgi?page=email&mid=969593]
+
+
+Dear JHU Data Conservancy,
+
+We were unable to generate a PDF Receipt for MSREFID1861125. The following error was encountered:
+
+File "IMG_2917.MOV" content cannot be extracted.
+
+Please reload the material to address these problems or contact the NIHMS Help Desk if you need assistance with the submission of this manuscript.
+
+
+Please sign in to the NIHMS system and continue the submission of your manuscript.
+
+To sign in, go to https://preview.nihms.nih.gov and choose the My NCBI sign-in route.
+
+Your sign-in username is: jhupass
+
+If you forgot your password, you can request a new one from My NCBI after going to the sign-in page.
+
+If you have any questions, please contact the NIHMS Help Desk at https://preview.nihms.nih.gov/db/sub.cgi?page=email.
+
+Sincerely,
+
+The NIHMS Help Desk
+
+
+
+
+

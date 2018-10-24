@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/pass-email-service.iml" filepath="$PROJECT_DIR$/pass-email-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pass-email-service-impl/pass-email-service-impl.iml" filepath="$PROJECT_DIR$/pass-email-service-impl/pass-email-service-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pass-email-service-model/pass-email-service-model.iml" filepath="$PROJECT_DIR$/pass-email-service-model/pass-email-service-model.iml" />
+    </modules>
+  </component>
+</project>

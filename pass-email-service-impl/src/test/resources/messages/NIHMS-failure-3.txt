@@ -1,0 +1,319 @@
+Received: from ESGEBEX4.win.ad.jhu.edu (10.15.89.111) by
+ ESGEBEX7.win.ad.jhu.edu (10.15.89.12) with Microsoft SMTP Server (TLS) id
+ 15.0.1367.3 via Mailbox Transport; Wed, 20 Jun 2018 16:45:29 -0400
+Received: from ESGEBEX16.win.ad.jhu.edu (10.15.89.244) by
+ ESGEBEX4.win.ad.jhu.edu (10.15.89.111) with Microsoft SMTP Server (TLS) id
+ 15.0.1367.3; Wed, 20 Jun 2018 16:45:29 -0400
+Received: from FEMmtw1.johnshopkins.edu (128.220.40.201) by
+ ESGEBEX16.win.ad.jhu.edu (10.15.89.244) with Microsoft SMTP Server (TLS) id
+ 15.0.1367.3 via Frontend Transport; Wed, 20 Jun 2018 16:45:29 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by FEMmtw1.johnshopkins.edu (Postfix) with SMTP id 419xfx2P8vz2ntPZ
+	for <hvu13@exchange.johnshopkins.edu>; Wed, 20 Jun 2018 16:45:29 -0400 (EDT)
+Received: from IronMTW4.johnshopkins.edu (unknown [128.220.40.1])
+	by FEMmtw1.johnshopkins.edu (Postfix) with ESMTPS id 419xfw74JRz2ntGX
+	for <hvu13@exchange.johnshopkins.edu>; Wed, 20 Jun 2018 16:45:28 -0400 (EDT)
+Received-SPF: None (IronMTW4.johnshopkins.edu: no sender
+  authenticity information available from domain of
+  nihms-help@ncbi.nlm.nih.gov) identity=pra;
+  client-ip=209.85.218.54; receiver=IronMTW4.johnshopkins.edu;
+  envelope-from="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-sender="nihms-help@ncbi.nlm.nih.gov";
+  x-conformance=sidf_compatible
+Received-SPF: Pass (IronMTW4.johnshopkins.edu: domain of
+  dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com designates
+  209.85.218.54 as permitted sender) identity=mailfrom;
+  client-ip=209.85.218.54; receiver=IronMTW4.johnshopkins.edu;
+  envelope-from="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-sender="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-conformance=sidf_compatible; x-record-type="v=spf1"
+Received-SPF: None (IronMTW4.johnshopkins.edu: no sender
+  authenticity information available from domain of
+  postmaster@mail-oi0-f54.google.com) identity=helo;
+  client-ip=209.85.218.54; receiver=IronMTW4.johnshopkins.edu;
+  envelope-from="dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com";
+  x-sender="postmaster@mail-oi0-f54.google.com";
+  x-conformance=sidf_compatible
+Authentication-Results: IronMTW4.johnshopkins.edu; dkim=none (message not signed) header.i=none; spf=None smtp.pra=nihms-help@ncbi.nlm.nih.gov; spf=Pass smtp.mailfrom=dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com; spf=None smtp.helo=postmaster@mail-oi0-f54.google.com; dmarc=fail (p=quarantine dis=none) d=ncbi.nlm.nih.gov
+IronPort-PHdr: =?us-ascii?q?9a23=3AeZVwoh+IPUEjgv9uRHKM819IXTAuvvDOBiVQ1KB3?=
+ =?us-ascii?q?0ekcTK2v8tzYMVDF4r011RmVBdids6oMotGVmpioYXYH75eFvSJKW713fDhBt/?=
+ =?us-ascii?q?8rmRc9CtWOE0zxIa2iRSU7GMNfSA0tpCnjYgBaF8nkelLdvGC54yIMFRXjLwp1?=
+ =?us-ascii?q?Ifn+FpLPg8it2O2+553ebx9UiDahfLh/MAi4oQLNu8cMnIBsMLwxyhzHontJf+?=
+ =?us-ascii?q?RZ22ZlLk+Nkhj/+8m94odt/zxftPw9+cFAV776f7kjQrxDEDsmKWE169b1uhTF?=
+ =?us-ascii?q?UACC+2ETUmQSkhpPHgjF8BT3VYr/vyfmquZw3jSRMsPsTbAwRD+s8aFlRhH1gy?=
+ =?us-ascii?q?sDLjI17n3bhsl2galGohyuugZ/zpbbb4+VKvRwcL7Tcs8VS2daXsZeTDBNDp+g?=
+ =?us-ascii?q?Y4cTDecMO/tToYnnp1sJqBuzHQ6hBOXuyj9Ig3/2xrQ20+Q/HgHCxAwtBNQOv2?=
+ =?us-ascii?q?jPo9X0LqsSV+S1zKzSwTXFbvNW2S3x6IfPchA/uPyBW697f8nJyUQ3CQ/JklGd?=
+ =?us-ascii?q?pZbmMj6VzOgBrXWX4ul6We+vhGMrsxx9riasy8s2lIXEiJ8ZxkrA+Cll2oo4J9?=
+ =?us-ascii?q?O1RUhmatC+CpRQrTuVN45uT8MiXW5ovCE6x6UDuZGhfSgKzI0rxxnea/CbaoSI?=
+ =?us-ascii?q?7BLuWemLLTd3g3Jlf72/hxKs/kS61uL8Ucy03E5LripDjNbMqmgA2wLP5sWDUP?=
+ =?us-ascii?q?dw/Ues1SyR2wzO6exIO0A5mKXDJ54k2LEwl54TsUrZHi/xnUX7lLKZeV84+uey?=
+ =?us-ascii?q?9+vnZbPmpoSCOI9ulAHxKKIuldC/AOg/LgcBRWab9vyk2b3j50L5RrVKgucokq?=
+ =?us-ascii?q?nEqJ3aJ8QbprOjDwBLz4kj9g2yDzij0NsCnHkHKEhJdw6Aj4jsI13OOuz3De+j?=
+ =?us-ascii?q?g1Swlzdm3/DGPqP8ApnQIHXOi6nufLlh5E5c0gUzy99f6IxOBrEDJ/LzWknxtM?=
+ =?us-ascii?q?fYDh8+Kwy0wOfnCNNm1o8ER22AH7KZY+vutgrc6uszKuKLYpQYoij0LfM0z/Hr?=
+ =?us-ascii?q?hH4931QaeP/tlc8MbXGkHq5OJUSZJ3XrnIFSP30Nu19qSu3qjUbHUTNXf160VK?=
+ =?us-ascii?q?g9oDc/DcSgDIeFSYez1u/SlBynF4FbMzgVQmuHFm3lIsDeA65dOhLXGddol3k/?=
+ =?us-ascii?q?bZbkToYg0R+0swqjkuhoK+PV/msTspexjYEptd2Wrgk78HlPN+rYy3uEFjEmmG?=
+ =?us-ascii?q?gCRnkw2KU5p019jFiEz/og2qEKJZlo//pMFzwCG9vcwuh9UY2gXwvAepKOSQ7j?=
+ =?us-ascii?q?TIj6Rz42Sd01zpkFZEMvQ9g=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0H5AAD7uypbhjbaVdFdHAEBAQQBAQoBA?=
+ =?us-ascii?q?YJTTCeBUgMHhCmIBF+LYIFhkB6FA4IEE4RZGQeCWhkHAQQwGAECAQEBAQEBAQE?=
+ =?us-ascii?q?BAQIQAQEBCAsLCCkrBII1JIJqEREKcAIFIQIECQQlAQUBIgE0gkFCggAFoGk8g?=
+ =?us-ascii?q?UGJR4IciEZtCQEIeYdJghOBP4QdAQmDPBAIglwxgiQCmSQJjwULjUGROAIEAgQ?=
+ =?us-ascii?q?FAgUPIYEgggsrCkFKgmiCCY5hkDoBAQ?=
+X-IPAS-Result: =?us-ascii?q?A0H5AAD7uypbhjbaVdFdHAEBAQQBAQoBAYJTTCeBUgMHhCm?=
+ =?us-ascii?q?IBF+LYIFhkB6FA4IEE4RZGQeCWhkHAQQwGAECAQEBAQEBAQEBAQIQAQEBCAsLC?=
+ =?us-ascii?q?CkrBII1JIJqEREKcAIFIQIECQQlAQUBIgE0gkFCggAFoGk8gUGJR4IciEZtCQE?=
+ =?us-ascii?q?IeYdJghOBP4QdAQmDPBAIglwxgiQCmSQJjwULjUGROAIEAgQFAgUPIYEgggsrC?=
+ =?us-ascii?q?kFKgmiCCY5hkDoBAQ?=
+X-IronPort-AV: E=Sophos;i="5.51,249,1526356800";
+   d="scan'208,217";a="131416271"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from mail-oi0-f54.google.com ([209.85.218.54])
+  by IronMTW4.johnshopkins.edu with ESMTP/TLS/AES128-GCM-SHA256; 20 Jun 2018 16:45:28 -0400
+Received: by mail-oi0-f54.google.com with SMTP id f79-v6so859911oib.7
+        for <hanh.vu@jhu.edu>; Wed, 20 Jun 2018 13:45:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-original-authentication-results:x-gm-message-state:delivered-to
+         :mime-version:from:to:date:subject:content-transfer-encoding
+         :message-id;
+        bh=zO7HPwPg45qAyqs56U/QlCwXNJfes6wRre7qU+cRaR8=;
+        b=LXdUuNPyDo6D9P4Vu0qq28+W88dlgE3gaTaHRRprfNmB5PfMBBDQOiRBnvvArac+nW
+         Rz7iKnxKG2KPkmKdHhYPZp5ZLCoGgmKhv2ZJyCbtQFoIsk0flF7KdgwRhlXNEPQL8U6E
+         +Mfnwq9Wrf6aNzoHO/xBTp0SZlif6u498SmVh/D7rc3kzioHkr3AQ0gso3Qi2l+6WU2r
+         /5Jc9ldNKV52VOSgPK+LN2ukG+pSqlp/UU4IPEtZ9NNKfpIzj/CFrKi6OFBHxZ7QvPv4
+         Q/41n3KsrJHoQBSxQr/UVINXy40VWHc62qK149gyH/gyGrw3oq2asVpCjtPCCij3zuhG
+         91HA==
+X-Original-Authentication-Results: mx.google.com;       spf=pass (google.com: domain of nihms-help@ncbi.nlm.nih.gov designates 165.112.13.46 as permitted sender) smtp.mailfrom=nihms-help@ncbi.nlm.nih.gov;       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ncbi.nlm.nih.gov
+X-Gm-Message-State: APt69E0R8XWh4h/WcY8LBYPpQllft82j3/c5h0qBJB9AaHruwd+vHquW
+	JPaXxB2lhd9fJ7JNyO7/OMHksxcDk4Aw2qgFi7tyJdrIiYsjseU=
+X-Received: by 2002:aca:fc82:: with SMTP id a124-v6mr493426oii.69.1529527527740;
+        Wed, 20 Jun 2018 13:45:27 -0700 (PDT)
+X-Forwarded-To: hanh.vu@jhu.edu
+X-Forwarded-For: dataconservancy@gmail.com hanh.vu@jhu.edu
+Delivered-To: dataconservancy@gmail.com
+Received: by 2002:ac9:3992:0:0:0:0:0 with SMTP id y18-v6csp1269672oce;
+        Wed, 20 Jun 2018 13:45:26 -0700 (PDT)
+X-Google-Smtp-Source: ADUXVKIBvhoiorlyUvb/i0j6vORsN8wW2Ateayrzv+UPY1ynDXhRg4WwFG8gLAuwPinWkSchNnD/
+X-Received: by 2002:a37:9e8f:: with SMTP id h137-v6mr19430120qke.20.1529527526861;
+        Wed, 20 Jun 2018 13:45:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1529527526; cv=none;
+        d=google.com; s=arc-20160816;
+        b=EbenxQUtYL3MHccyGeIWKORScIpiVQ4XnTumcF+fPn9r0WYdGYLlDH9cgH2MwUpOvG
+         V/tW0xsz8j/DNbye8Fgjp48ODTNhS9+Dssc1/CIyy4/TKLoe5gcB+JpdTp2Fmj9Nl7Ly
+         w1MSoxNKSXq19+A+1imNyufVR/jCNQ/q+hOghQTpyfrI+/vZ5vQcQTCIfPukdm3CtL/0
+         fw68PZSsaX7NKRjceIqrHz0FRzYdSrTQBDrhYO+VPz8L40PxYOwnuujW7fNhjcnWOaMs
+         MXv3VX/da66oUPd3e4MqGCoYEbczeuMLdmVkJXktOH5UaxhoAxFdBduav3g1UJ4S/SUv
+         oDbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=message-id:content-transfer-encoding:subject:date:to:from
+         :mime-version:arc-authentication-results;
+        bh=zO7HPwPg45qAyqs56U/QlCwXNJfes6wRre7qU+cRaR8=;
+        b=HfgBqlfjGt7NsrtyfPEvGX3KiRbOscll5IWV3n8f78vuE6KGso024vwiKzNW0G+m5X
+         mTlLxnqMzUBOsELn1HLu2H0nIXtegh5sW/H9MeTBkBiZ08UB1l/GzYEOgJkP6Pi/RcJH
+         2Y6JBs883fJVceR++pkJLc1/oFoFsHxCVJK3kFcja76jmIfz6nsYOf7qjm1eEDh70VfY
+         py2F4Qk90m4qV+mius/izu1GUz0f8A2unggDe66SmYUdBe0HPqvi4H75b5vphbh+7tdq
+         QVxsVmC9JRTl+XTV8TwY6U4Xb+z+cO5QR9sO5tR5S4pugtGMo3cCBZnKT4xNe6hPPU4X
+         K9AQ==
+ARC-Authentication-Results: i=1; mx.google.com;
+       spf=pass (google.com: domain of nihms-help@ncbi.nlm.nih.gov designates 165.112.13.46 as permitted sender) smtp.mailfrom=nihms-help@ncbi.nlm.nih.gov;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ncbi.nlm.nih.gov
+Received: from nihcesxwayst05.hub.nih.gov (nihcesxwayst05.hub.nih.gov. [165.112.13.46])
+        by mx.google.com with ESMTPS id 18-v6si3340100qvf.10.2018.06.20.13.45.26
+        for <dataconservancy@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jun 2018 13:45:26 -0700 (PDT)
+X-SBRS-Extended: Low
+X-IronPortListener: ces-out
+X-IronPort-AV: E=Sophos;i="5.51,249,1526356800";
+   d="scan'208,217";a="12300520"
+Received: from uccsx01.nih.gov (HELO ces.nih.gov) ([165.112.194.91])
+  by nihcesxwayst05.hub.nih.gov with ESMTP; 20 Jun 2018 16:45:26 -0400
+Received: from nihxwaye3as04.hub.nih.gov (165.112.13.43) by uccsX01.nih.gov
+ (165.112.194.91) with Microsoft SMTP Server (TLS) id 15.0.1367.3; Wed, 20 Jun
+ 2018 16:45:26 -0400
+X-SBRS-Extended: Low
+X-IronPortListener: non-ces-out
+X-IronPort-AV: E=Sophos;i="5.51,249,1526356800";
+   d="scan'208,217";a="11788596"
+Received: from nihsmtpxwayb02.hub.nih.gov (HELO mail2.ncbi.nlm.nih.gov) ([128.231.90.73])
+  by nihsmtpxwayst04.hub.nih.gov with ESMTP; 20 Jun 2018 16:45:19 -0400
+Received: from MSSQL112 (mssql112.be-md.ncbi.nlm.nih.gov [10.10.127.112])
+	by mail2.ncbi.nlm.nih.gov (Postfix) with ESMTP id 9BBEA1A0002;
+	Wed, 20 Jun 2018 16:45:19 -0400 (EDT)
+MIME-Version: 1.0
+From: <nihms-help@ncbi.nlm.nih.gov>
+To: <dataconservancy@gmail.com>, <smith2@nih.gov>
+Date: Wed, 20 Jun 2018 16:45:19 -0400
+Subject: [nihms/test] Bulk submission (errors encountered)
+Message-ID: <20180620204519.9BBEA1A0002@mail2.ncbi.nlm.nih.gov>
+X-Exchange-ASBP: 1
+Return-Path: dataconservancy+caf_=hanh.vu=jhu.edu@gmail.com
+X-MS-Exchange-Organization-Network-Message-Id: 624c5957-5391-4009-d42a-08d5d6eec25a
+X-MS-Exchange-Organization-AVStamp-Enterprise: 1.0
+X-MS-Exchange-Organization-AuthSource: ESGEBEX16.win.ad.jhu.edu
+X-MS-Exchange-Organization-AuthAs: Anonymous
+Content-type: multipart/alternative;
+	boundary="B_3613988475_759059197"
+
+> This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+--B_3613988475_759059197
+Content-type: text/plain;
+	charset="UTF-8"
+Content-transfer-encoding: 7bit
+
+
+
+ Error <CustomMessage id="bulksub_xml_dtd_validation_failed"><param id="DETAIL">Error (3, 4): The element 'journal-meta' has incomplete content. List of possible elements expected: 'journal-id issn'.</param></CustomMessage>Job TaskId=nihms-native-2017-07_2018-06-20_20-06-25_d0ff66f3-f336-40c1-b8c1-57042c65057b  was not submitted.
+
+--B_3613988475_759059197
+Content-type: text/html;
+	charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3D9; IE=3D8; IE=3D7; IE=3DEDGE">
+<title>Bulk submission (errors encountered)</title>
+<style>
+
+                    body
+                    {
+                        font-family: "Helvetica Neue",Helvetica,Arial,sans-=
+serif;
+                    }
+
+
+                    tr{
+                    page-break-inside: avoid;
+                    }
+
+                    .table td,
+                    .table th {
+                    background-color: #fff !important;
+                    }
+
+                    .table {
+                    border-collapse: collapse !important;
+                    }
+                    .table-bordered th,
+                    .table-bordered td {
+                    border: 1px solid #ddd !important;
+                    }
+
+                    table {
+                    background-color: transparent;
+
+                    }
+                    th {
+                    text-align: left;
+                    }
+                    .table {
+                    width: 100%;
+                    max-width: 100%;
+                    margin-bottom: 20px;
+                    }
+                    .table > thead > tr > th,
+                    .table > tbody > tr > th,
+                    .table > tfoot > tr > th,
+                    .table > thead > tr > td,
+                    .table > tbody > tr > td,
+                    .table > tfoot > tr > td {
+                    padding: 8px;
+                    line-height: 1.42857143;
+                    vertical-align: top;
+                    border-top: 1px solid #ddd;
+                    }
+                    .table > thead > tr > th {
+                    vertical-align: bottom;
+                    border-bottom: 2px solid #ddd;
+                    }
+                    .table > caption + thead > tr:first-child > th,
+                    .table > colgroup + thead > tr:first-child > th,
+                    .table > thead:first-child > tr:first-child > th,
+                    .table > caption + thead > tr:first-child > td,
+                    .table > colgroup + thead > tr:first-child > td,
+                    .table > thead:first-child > tr:first-child > td {
+                    border-top: 0;
+                    }
+                    .table > tbody + tbody {
+                    border-top: 2px solid #ddd;
+                    }
+                    .table .table {
+                    background-color: #fff;
+                    border-color: #fff;
+                    }
+
+
+
+                    .label {
+                    border: 0px solid #000;
+                    }
+
+
+                    .label {
+                    display: inline;
+                    padding: .2em .6em .3em;
+                    font-size: 75%;
+                    font-weight: bold;
+                    line-height: 1;
+                    color: #fff;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: baseline;
+                    border-radius: .25em;
+                    }
+
+                    .label-info {
+                    background-color: #5bc0de;
+                    }
+
+                    .label-warning {
+                    background-color: #f0ad4e;
+                    }
+
+                    .label-danger {
+                    background-color: #d9534f;
+                    }
+
+                </style>
+</head>
+<body>
+<br>
+<br>
+<table class=3D"table">
+<colgroup><col span=3D"1" style=3D"width:50px"><col span=3D"1"></colgroup>
+<thead>
+<tr>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style=3D"background-color: #d9534f; border: 1px solid #fff;display:=
+ inline; font-size: 85%; font-weight: bold; line-height: 1; color: #fff; tex=
+t-align: center; white-space: nowrap; vertical-align: baseline; border-colla=
+pse: separate; -webkit-border-radius: 4px 4px 4px 4px; -moz-border-radius: 4=
+px 4px 4px 4px; border-radius: 4px 4px 4px 4px;">&nbsp;Error&nbsp;</span></t=
+d>
+<td></td>
+<td>&lt;CustomMessage id=3D&quot;bulksub_xml_dtd_validation_failed&quot;&gt;&=
+lt;param id=3D&quot;DETAIL&quot;&gt;Error (3, 4): The element 'journal-meta' h=
+as incomplete content. List of possible elements expected: 'journal-id issn'=
+.&lt;/param&gt;&lt;/CustomMessage&gt;Job TaskId=3Dnihms-native-2017-07_2018-06=
+-20_20-06-25_d0ff66f3-f336-40c1-b8c1-57042c65057b
+ was not submitted.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+
+
+--B_3613988475_759059197--
