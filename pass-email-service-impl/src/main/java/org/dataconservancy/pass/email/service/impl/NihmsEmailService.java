@@ -118,17 +118,23 @@ public class NihmsEmailService {
             } else {//message content is plain text - we are in wild west mode
                 String[] lines = ((String) content).split("\n");
                 String out = null;
+                int counter = 0;
+                boolean haveHeuristicTrigger = false;
                 for (String line : lines) {//we may have several submissions in this email message
+                    if (haveHeuristicTrigger) {
+                        counter++;
+                    }
                     if (line.contains(JMS_MESSAGE_TRIGGER)) {
                         submissionMessageList.add(formSubmissionMessage(message, line));
                     } else if (line.contains(" MSREFID")) {//failure mode 6 - need a different trigger
                         out = line;
-                    } else if (line.startsWith("File")) {//still failure mode 6
-                        if (out != null) {
-                            out = String.join(" ", out,line);
-                            submissionMessageList.add(formSubmissionMessage(message, out));
-                        }
-                        out = null;
+                        haveHeuristicTrigger = true;
+                    } else if (counter == 2) {//still failure mode 6 - we will pick up the second line after the trigger
+                        //(first is blank) and append it to the trigger line. this is the detail for the error.
+                        out = String.join(" ", out,line);
+                        submissionMessageList.add(formSubmissionMessage(message, out));
+                        counter = 0;
+                        haveHeuristicTrigger = false;
                     }
                 }
             }
@@ -153,7 +159,6 @@ public class NihmsEmailService {
         if (info.contains(JMS_MESSAGE_TRIGGER)) {
             String[] rawMessage = info.split(JMS_MESSAGE_TRIGGER);
             String[] taskIdVein = rawMessage[rawMessage.length - 1].split(" ");//"mining" for taskId
-
             sm.setTaskId(taskIdVein[0]);//first token will be the taskId
 
             if (rawMessage[0].length() > 0 && rawMessage.length > 1) {//first case
