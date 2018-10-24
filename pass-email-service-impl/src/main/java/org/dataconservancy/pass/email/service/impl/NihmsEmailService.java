@@ -82,8 +82,6 @@ public class NihmsEmailService {
                     }
                 message.setFlag(Flags.Flag.SEEN, isSuccess);
             }
-
-
         } catch (NoSuchProviderException e) {
             LOG.info("No such provider for protocol: " + protocol);
             e.printStackTrace();
@@ -137,7 +135,7 @@ public class NihmsEmailService {
                         out = line;
                         haveHeuristicTrigger = true;
                     } else if (counter == 2) {//still failure mode 6 - we will pick up the second line after the trigger
-                        //(first is blank) and append it to the trigger line. this is the detail for the error.
+                        //(first is blank) and append it to the trigger line. (this is the detail for the error.)
                         out = String.join(" ", out,line);
                         submissionMessageList.add(formSubmissionMessage(message, out));
                         //reset heuristic trigger handling - there may be more submissions to process
@@ -146,6 +144,7 @@ public class NihmsEmailService {
                         out = null;
                     }
                 }
+                scanner.close();
                 //this should not happen, but if we had a heuristic trigger and it didn't "complete" with a second line,
                 //send a message anyway. (if the last heuristic-triggered message completed,  "out" will be null)
                 if(out != null) {
