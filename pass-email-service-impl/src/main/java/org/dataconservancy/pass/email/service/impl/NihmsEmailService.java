@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -75,11 +76,11 @@ public class NihmsEmailService {
 
             Message[] messageArray = inbox.getMessages();
             for (Message message : messageArray) {
-                boolean isSuccessful = message.getSubject().endsWith(SUCCESS_CRITERION);
+                boolean isSuccess = message.getSubject().endsWith(SUCCESS_CRITERION);
                 if (!message.getFlags().contains(Flags.Flag.SEEN)) {
 //TODO: process the NihmsSubmissionMessage objects for this message
                     }
-                message.setFlag(Flags.Flag.SEEN, isSuccessful);
+                message.setFlag(Flags.Flag.SEEN, isSuccess);
             }
 
 
@@ -116,26 +117,39 @@ public class NihmsEmailService {
                     }
                 }
             } else {//message content is plain text - we are in wild west mode
-                String[] lines = ((String) content).split("\n");
-                String out = null;
-                int counter = 0;
-                boolean haveHeuristicTrigger = false;
-                for (String line : lines) {//we may have several submissions in this email message
+                //these three variables help handle the case when there is
+                //no message JMS_MESSAGE_TRIGGER. a single stable email template would have been helpful ...
+                String out = null;//the output string we will build
+                int counter = 0;//number of lines since the start of the heuristic trigger
+                boolean haveHeuristicTrigger = false;//indicates when we should start counting lines
+
+                Scanner scanner = new Scanner((String)content);//we'll go line by line
+                String line;
+
+                while(scanner.hasNext()) {
+                    line = scanner.nextLine();
                     if (haveHeuristicTrigger) {
                         counter++;
                     }
                     if (line.contains(JMS_MESSAGE_TRIGGER)) {
                         submissionMessageList.add(formSubmissionMessage(message, line));
-                    } else if (line.contains(" MSREFID")) {//failure mode 6 - need a different trigger
+                    } else if (line.contains(" MSREFID")) {//failure mode 6 - need this heuristic trigger
                         out = line;
                         haveHeuristicTrigger = true;
                     } else if (counter == 2) {//still failure mode 6 - we will pick up the second line after the trigger
                         //(first is blank) and append it to the trigger line. this is the detail for the error.
                         out = String.join(" ", out,line);
                         submissionMessageList.add(formSubmissionMessage(message, out));
+                        //reset heuristic trigger handling - there may be more submissions to process
                         counter = 0;
                         haveHeuristicTrigger = false;
+                        out = null;
                     }
+                }
+                //this should not happen, but if we had a heuristic trigger and it didn't "complete" with a second line,
+                //send a message anyway. (if the last heuristic-triggered message completed,  "out" will be null)
+                if(out != null) {
+                    submissionMessageList.add(formSubmissionMessage(message, out));
                 }
             }
         } catch (MessagingException | IOException e) {
@@ -146,7 +160,7 @@ public class NihmsEmailService {
 
     private NihmsSubmissionMessage formSubmissionMessage(Message message, String info) throws MessagingException {
         NihmsSubmissionMessage sm = new NihmsSubmissionMessage();
-        sm.setMessageId(getMessageID(message.getAllHeaders()));
+        sm.setMessageId(getHeaderValue(message.getAllHeaders(), "Message-ID"));
         sm.setSentDate(message.getSentDate());
         sm.setLatestReadDate(new Date());
         sm.setSubmitted(message.getSubject().endsWith(SUCCESS_CRITERION));
@@ -179,6 +193,7 @@ public class NihmsEmailService {
                     String[] pair = s.split("=");
                     if (pair[0].equals("ID")) {
                         sm.setNihmsId(pair[1]);
+                        break;
                     }
                 }
             }
@@ -187,10 +202,10 @@ public class NihmsEmailService {
         return sm;
     }
 
-    private String getMessageID (Enumeration<Header> headers) {
+    private String getHeaderValue (Enumeration<Header> headers, String key) {
         while (headers.hasMoreElements()) {
             Header header = headers.nextElement();
-            if(header.getName().equals("Message-ID")){
+            if(header.getName().equals(key)){
                 return header.getValue();
             }
         }
