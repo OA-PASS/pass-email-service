@@ -105,7 +105,7 @@ public class NihmsEmailService {
                         break;
                     }
                 }
-                //repair some escaped stuff to fix parsing
+                //repair some escaped stuff to fix parsing issues
                 bodyPart = bodyPart.replace("&gt;", ">").replace("&lt;", "<")
                         .replace("&quot;", "\"");
                 Document doc = Jsoup.parse(bodyPart);
@@ -115,22 +115,22 @@ public class NihmsEmailService {
                         submissionMessageList.add(formSubmissionMessage(message, submission.text()));
                     }
                 }
-            } else {
+            } else {//this is a plain text email message
                 Scanner scanner = new Scanner((String) content);//we'll go line by line
+                scanner.useDelimiter("\\r?\\n");
                 String line;
 
-                while (scanner.hasNextLine()) {//skip blank lines
-                    line = scanner.nextLine();
+                while (scanner.hasNext()) {//skip blank lines
+                    line = scanner.next();
                     if (line.contains(JMS_MESSAGE_TRIGGER)) {
                         submissionMessageList.add(formSubmissionMessage(message, line));
                     } else if (line.contains(JMS_FALLBACK_MESSAGE_TRIGGER)) {//no taskId here, try to assemble some info
                         String out = line;
-                        if (scanner.hasNextLine()) {//we need two lines for these error messages
-                            if (scanner.nextLine().length() == 0 && scanner.hasNextLine()) {
-                                out = String.join(" ", out, scanner.nextLine());
-                            }
+                        String put = "";
+                        while(scanner.hasNext() && put.length() == 0) {//tack on next non-empty line
+                            put = scanner.next();
                         }
-                        submissionMessageList.add(formSubmissionMessage(message, out));
+                        submissionMessageList.add(formSubmissionMessage(message, String.join(" ", out, put)));
                     }
                 }
                 scanner.close();
@@ -155,17 +155,24 @@ public class NihmsEmailService {
         if (info.contains(JMS_MESSAGE_TRIGGER)) {
             Scanner scanner = new Scanner(info);
             scanner.findInLine(JMS_MESSAGE_TRIGGER);
-            if(scanner.hasNext()) {
+            if (scanner.hasNext()) {
                 sm.setTaskId(scanner.next());
+            }
+            if (sm.isSubmitted()) {//let's get the ID
+                //scanner reset not necessary - this occurs after the first findInLine() above
+                scanner.findInLine("ID=");
+                if (scanner.hasNext()) {
+                    sm.setNihmsId(scanner.next());
+                }
             }
             scanner.close();
         }
 
-        // setting the outcomeDescription is a little tricky - there are three cases:
+        // there are three cases for setting the outcomeDescription
         // info string looks like
-        // Job TaskId=<stuff> (success)
-        // <stuff>Job TaskId=<more stuff> (nicely formed errors)
-        // <stuff with no "Job taskId"> (free form errors)
+        //  Job TaskId=<stuff> (success)
+        //  <stuff>Job TaskId=<more stuff> (nicely formed errors)
+        //  <stuff (with no "Job taskId")> (free form errors)
         // use <stuff> in any case
         if(info.startsWith(JMS_MESSAGE_TRIGGER)) {
             sm.setOutcomeDescription(info.substring(JMS_MESSAGE_TRIGGER.length()));
@@ -173,15 +180,6 @@ public class NihmsEmailService {
             sm.setOutcomeDescription(info.substring(0,info.indexOf(JMS_MESSAGE_TRIGGER)));
         } else {//no taskId here, just give what we have in info
             sm.setOutcomeDescription(info);
-        }
-
-        if (sm.isSubmitted()) {//let's get the ID
-            Scanner scanner = new Scanner(info);
-            scanner.findInLine("ID=");
-            if(scanner.hasNext()) {
-                sm.setNihmsId(scanner.next());
-            }
-            scanner.close();
         }
 
         return sm;
