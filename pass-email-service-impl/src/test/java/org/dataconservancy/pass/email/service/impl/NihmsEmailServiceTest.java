@@ -37,6 +37,7 @@ import java.util.TimeZone;
 
 import static java.util.Locale.US;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 
@@ -254,8 +255,8 @@ public class NihmsEmailServiceTest {
                 actual.getOutcomeDescription() == null);
         assertEquals(expected.isSubmitted(), actual.isSubmitted());
         assertTrue(expected.getSentDate().toString().equals(actual.getSentDate().toString()));
-        // we skip the latestReadDate, which is set dynamically and we can't get access.
-        // testing sentDate is good enough.
+        //we can't compare this, since we don't know what to expect
+        assertNotNull(actual.getLatestReadDate());
         assertTrue(expected.getMessageId() != null?  expected.getMessageId().equals(actual.getMessageId()): actual.getMessageId() == null);
         assertTrue(expected.getTaskId() != null ? expected.getTaskId().equals(actual.getTaskId()): actual.getTaskId() == null);
         assertTrue(expected.getNihmsId() != null ? expected.getNihmsId().equals(actual.getNihmsId()): actual.getNihmsId() == null);
