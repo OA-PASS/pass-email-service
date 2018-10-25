@@ -45,6 +45,7 @@ public class NihmsEmailService {
     private Logger LOG = LoggerFactory.getLogger(NihmsEmailService.class);
     private static final String SUCCESS_CRITERION = "Bulk submission submitted";
     private static final String JMS_MESSAGE_TRIGGER = "Job TaskId=";
+    private static final String JMS_FALLBACK_MESSAGE_TRIGGER = " MSREFID";
 
     private Properties serverProperties(String protocol, String host, String port) {
         Properties props = new Properties();
@@ -111,49 +112,36 @@ public class NihmsEmailService {
                 Elements submissions = doc.select("td");
                 for (Element submission : submissions) {//we may have several submissions in this email message
                     if (submission.text().contains("TaskId")) {
-                       submissionMessageList.add(formSubmissionMessage(message, submission.text()));
+                        submissionMessageList.add(formSubmissionMessage(message, submission.text()));
                     }
                 }
-            } else {//message content is plain text - we are in wild west mode
-                //these three variables help handle the case when there is
-                //no message JMS_MESSAGE_TRIGGER. a single stable email template would have been helpful ...
-                String out = null;//the output string we will build
-                int counter = 0;//number of lines since the start of the heuristic trigger
-                boolean haveHeuristicTrigger = false;//indicates when we should start counting lines
-
-                Scanner scanner = new Scanner((String)content);//we'll go line by line
+            } else {
+                Scanner scanner = new Scanner((String) content);//we'll go line by line
                 String line;
 
-                while(scanner.hasNext()) {
+                while (scanner.hasNextLine()) {//skip blank lines
                     line = scanner.nextLine();
-                    if (haveHeuristicTrigger) {
-                        counter++;
-                    }
                     if (line.contains(JMS_MESSAGE_TRIGGER)) {
                         submissionMessageList.add(formSubmissionMessage(message, line));
-                    } else if (line.contains(" MSREFID")) {//failure mode 6 - need this heuristic trigger
-                        out = line;
-                        haveHeuristicTrigger = true;
-                    } else if (counter == 2) {//still failure mode 6 - we will pick up the second line after the trigger
-                        //(first is blank) and append it to the trigger line. (this is the detail for the error.)
-                        out = String.join(" ", out,line);
+                    } else if (line.contains(JMS_FALLBACK_MESSAGE_TRIGGER)) {//no taskId here, try to assemble some info
+                        String out = line;
+                        if (scanner.hasNextLine()) {//we need two lines for these error messages
+                            if (scanner.nextLine().length() == 0 && scanner.hasNextLine()) {
+                                out = String.join(" ", out, scanner.nextLine());
+                            }
+                        }
                         submissionMessageList.add(formSubmissionMessage(message, out));
-                        //reset heuristic trigger handling - there may be more submissions to process
-                        counter = 0;
-                        haveHeuristicTrigger = false;
-                        out = null;
                     }
                 }
                 scanner.close();
-                //this should not happen, but if we had a heuristic trigger and it didn't "complete" with a second line,
-                //send a message anyway. (if the last heuristic-triggered message completed,  "out" will be null)
-                if(out != null) {
-                    submissionMessageList.add(formSubmissionMessage(message, out));
-                }
             }
-        } catch (MessagingException | IOException e) {
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
         return submissionMessageList;
     }
 
@@ -164,40 +152,38 @@ public class NihmsEmailService {
         sm.setLatestReadDate(new Date());
         sm.setSubmitted(message.getSubject().endsWith(SUCCESS_CRITERION));
 
+        if (info.contains(JMS_MESSAGE_TRIGGER)) {
+            Scanner scanner = new Scanner(info);
+            scanner.findInLine(JMS_MESSAGE_TRIGGER);
+            if(scanner.hasNext()) {
+                sm.setTaskId(scanner.next());
+            }
+            scanner.close();
+        }
+
         // setting the outcomeDescription is a little tricky - there are three cases:
         // info string looks like
-        // <stuff>Job TaskId=<more stuff> (nicely formed errors)
         // Job TaskId=<stuff> (success)
+        // <stuff>Job TaskId=<more stuff> (nicely formed errors)
         // <stuff with no "Job taskId"> (free form errors)
-        if (info.contains(JMS_MESSAGE_TRIGGER)) {
-            String[] rawMessage = info.split(JMS_MESSAGE_TRIGGER);
-            String[] taskIdVein = rawMessage[rawMessage.length - 1].split(" ");//"mining" for taskId
-            sm.setTaskId(taskIdVein[0]);//first token will be the taskId
-
-            if (rawMessage[0].length() > 0 && rawMessage.length > 1) {//first case
-                sm.setOutcomeDescription(rawMessage[0]);
-                } else {
-                    if (rawMessage.length > 1) {//second case
-                        sm.setOutcomeDescription(rawMessage[1]);
-                    }
-                }
+        // use <stuff> in any case
+        if(info.startsWith(JMS_MESSAGE_TRIGGER)) {
+            sm.setOutcomeDescription(info.substring(JMS_MESSAGE_TRIGGER.length()));
+        } else if (info.contains(JMS_MESSAGE_TRIGGER)) {
+            sm.setOutcomeDescription(info.substring(0,info.indexOf(JMS_MESSAGE_TRIGGER)));
         } else {//no taskId here, just give what we have in info
             sm.setOutcomeDescription(info);
         }
 
         if (sm.isSubmitted()) {//let's get the ID
-            String[] infoParts = info.split(" ");
-            for (String s : infoParts) {
-                if (s.contains("=")) {
-                    String[] pair = s.split("=");
-                    if (pair[0].equals("ID")) {
-                        sm.setNihmsId(pair[1]);
-                        break;
-                    }
-                }
+            Scanner scanner = new Scanner(info);
+            scanner.findInLine("ID=");
+            if(scanner.hasNext()) {
+                sm.setNihmsId(scanner.next());
             }
-
+            scanner.close();
         }
+
         return sm;
     }
 
