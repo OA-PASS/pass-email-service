@@ -43,9 +43,13 @@ import javax.mail.internet.MimeMultipart;
 
 public class NihmsEmailService {
     private Logger LOG = LoggerFactory.getLogger(NihmsEmailService.class);
+
+    //some string literals
     private static final String SUCCESS_CRITERION = "Bulk submission submitted";
     private static final String JMS_MESSAGE_TRIGGER = "Job TaskId=";
     private static final String JMS_FALLBACK_MESSAGE_TRIGGER = " MSREFID";
+    private static final String MESSAGE_ID_HEADER_KEY = "Message-ID";
+    private static final String NIHMS_ID_KEY = "ID=";
 
     private Properties serverProperties(String protocol, String host, String port) {
         Properties props = new Properties();
@@ -111,7 +115,7 @@ public class NihmsEmailService {
                 Document doc = Jsoup.parse(bodyPart);
                 Elements submissions = doc.select("td");
                 for (Element submission : submissions) {//we may have several submissions in this email message
-                    if (submission.text().contains("TaskId")) {
+                    if (submission.text().contains(JMS_MESSAGE_TRIGGER)) {
                         submissionMessageList.add(formSubmissionMessage(message, submission.text()));
                     }
                 }
@@ -147,7 +151,7 @@ public class NihmsEmailService {
 
     private NihmsSubmissionMessage formSubmissionMessage(Message message, String info) throws MessagingException {
         NihmsSubmissionMessage sm = new NihmsSubmissionMessage();
-        sm.setMessageId(getHeaderValue(message.getAllHeaders(), "Message-ID"));
+        sm.setMessageId(getHeaderValue(message.getAllHeaders(), MESSAGE_ID_HEADER_KEY));
         sm.setSentDate(message.getSentDate());
         sm.setLatestReadDate(new Date());
         sm.setSubmitted(message.getSubject().endsWith(SUCCESS_CRITERION));
@@ -159,8 +163,8 @@ public class NihmsEmailService {
                 sm.setTaskId(scanner.next());
             }
             if (sm.isSubmitted()) {//let's get the ID
-                //scanner reset not necessary - this occurs after the first findInLine() above
-                scanner.findInLine("ID=");
+                //scanner reset() not necessary - this occurs after the first findInLine() above
+                scanner.findInLine(NIHMS_ID_KEY);
                 if (scanner.hasNext()) {
                     sm.setNihmsId(scanner.next());
                 }
