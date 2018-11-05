@@ -34,7 +34,7 @@ import java.util.Properties;
 import java.util.TimeZone;
 
 import static java.util.Locale.US;
-import static org.junit.Assert.assertEquals;;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 

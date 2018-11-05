@@ -40,16 +40,18 @@ import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.search.SearchTerm;
+import javax.mail.search.SubjectTerm;
 
 public class NihmsEmailService {
     private Logger LOG = LoggerFactory.getLogger(NihmsEmailService.class);
 
-    //some string literals
     private static final String SUCCESS_CRITERION = "Bulk submission submitted";
     private static final String JMS_MESSAGE_TRIGGER = "Job TaskId=";
-    private static final String JMS_FALLBACK_MESSAGE_TRIGGER = " MSREFID";
+    private static final String JMS_FALLBACK_MESSAGE_TRIGGER = " MSREFID";//leading space is important
     private static final String MESSAGE_ID_HEADER_KEY = "Message-ID";
     private static final String NIHMS_ID_KEY = "ID=";
+    private static final String SUBJECT_SEARCH_STRING = "Bulk submission";
 
     private Properties serverProperties(String protocol, String host, String port) {
         Properties props = new Properties();
@@ -68,10 +70,12 @@ public class NihmsEmailService {
      * @param port     - the port on the host to connect to
      * @param userName - the name of the user on the mail account to be read
      * @param password - the password for the user of the mail account
+     * @return the list of unseen emails which match our subject search string
      */
-    public void getEmails(String protocol, String host, String port, String userName, String password) {
+    public List<Message> getEmails(String protocol, String host, String port, String userName, String password) {
         Properties props = serverProperties(protocol, host, port);
         Session session = Session.getDefaultInstance(props);
+        List<Message> messagesToBeProcessed = new ArrayList<>();
 
         try (Store store = session.getStore(protocol);
              Folder inbox = store.getFolder("INBOX")
@@ -79,24 +83,33 @@ public class NihmsEmailService {
             store.connect(userName, password);
             inbox.open(Folder.READ_WRITE);
 
-            Message[] messageArray = inbox.getMessages();
+            SearchTerm searchTerm = new SubjectTerm(SUBJECT_SEARCH_STRING);
+            Message[] messageArray = inbox.search(searchTerm);
+
             for (Message message : messageArray) {
                 boolean isSuccess = message.getSubject().endsWith(SUCCESS_CRITERION);
                 if (!message.getFlags().contains(Flags.Flag.SEEN)) {
-//TODO: process the NihmsSubmissionMessage objects for this message
+                    if (isSuccess) {
+                        message.setFlag(Flags.Flag.SEEN, isSuccess);
                     }
-                message.setFlag(Flags.Flag.SEEN, isSuccess);
+                }
+                messagesToBeProcessed.add(message);
+                LOG.info("Message with massageId " +
+                        getHeaderValue(message.getAllHeaders(), MESSAGE_ID_HEADER_KEY) +
+                        " added to message processing list.");
             }
+
         } catch (NoSuchProviderException e) {
-            LOG.info("No such provider for protocol: " + protocol);
+            LOG.error("No such provider for protocol: " + protocol);
             e.printStackTrace();
         } catch (MessagingException e) {
-            LOG.info("Unable to connect to the message store");
+            LOG.error("Unable to connect to the message store");
             e.printStackTrace();
         }
+        return messagesToBeProcessed;
     }
 
-    List<NihmsSubmissionMessage> processMessage(Message message) {
+        List<NihmsSubmissionMessage> processMessage(Message message) {
         List<NihmsSubmissionMessage> submissionMessageList = new ArrayList<>();
         try {
             Object content = message.getContent();
@@ -141,9 +154,9 @@ public class NihmsEmailService {
             }
 
         } catch (MessagingException e) {
-            e.printStackTrace();
+            LOG.error("Messaging Exception ", e);
         } catch (IOException e) {
-            e.printStackTrace();
+           LOG.error("IO Exception ", e);
         }
 
         return submissionMessageList;
@@ -172,12 +185,17 @@ public class NihmsEmailService {
             scanner.close();
         }
 
-        // there are three cases for setting the outcomeDescription
-        // info string looks like
-        //  Job TaskId=<stuff> (success)
-        //  <stuff>Job TaskId=<more stuff> (nicely formed errors)
-        //  <stuff (with no "Job taskId")> (free form errors)
-        // use <stuff> in any case
+        /* there are three cases for setting the outcomeDescription
+         *info string looks like
+         * <ul>
+         *     <li>Job taskId=<stuff> (success)</li>
+         *     <li><stuff>Job TaskId=<more stuff> (nicely formed errors)</li>
+         *     <li><stuff (with no "Job taskId")> (free form errors)</li>
+         * </ul>
+         * use <stuff> in any case
+         *
+         */
+
         if(info.startsWith(JMS_MESSAGE_TRIGGER)) {
             sm.setOutcomeDescription(info.substring(JMS_MESSAGE_TRIGGER.length()));
         } else if (info.contains(JMS_MESSAGE_TRIGGER)) {
@@ -189,6 +207,12 @@ public class NihmsEmailService {
         return sm;
     }
 
+    /**
+     * a convenience method to grab a mail header value
+     * @param headers the list of headers in the message
+     * @param key the key for the header
+     * @return the value for the header
+     */
     private String getHeaderValue (Enumeration<Header> headers, String key) {
         while (headers.hasMoreElements()) {
             Header header = headers.nextElement();
