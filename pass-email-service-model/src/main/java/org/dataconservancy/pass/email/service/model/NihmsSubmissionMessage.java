@@ -102,8 +102,8 @@ public class NihmsSubmissionMessage {
         if (latestReadDate != null ? !latestReadDate.equals(that.latestReadDate) : that.latestReadDate != null) return false;
         if (messageId != null ? !messageId.equals(that.messageId) : that.messageId != null) return false;
         if (taskId != null ? !taskId.equals(that.taskId) : that.taskId != null) return false;
-        if (nihmsId != null ? !nihmsId.equals(that.nihmsId) : that.nihmsId != null) return false;
-        return true;
+        if (nihmsId != null ? nihmsId.equals(that.nihmsId) : that.nihmsId == null) return true;
+        return false;
     }
 
 

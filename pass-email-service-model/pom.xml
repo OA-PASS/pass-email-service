@@ -27,5 +27,12 @@
 
     <artifactId>pass-email-service-model</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
