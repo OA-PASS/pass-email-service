@@ -65,6 +65,10 @@ public class NihmsEmailService {
     }
 
     /**
+     * This method is responsible for retrieving the emails from the appropriate inbox, and extracting all
+     * messages which need to be processed. Emails indicating successful submissions will be flagged as SEEN, so that
+     * they will not be processed on the next run.
+     *
      * @param protocol - the mail transport protocol used to connect
      * @param host     - the host to connect to
      * @param port     - the port on the host to connect to
@@ -92,11 +96,11 @@ public class NihmsEmailService {
                     if (isSuccess) {
                         message.setFlag(Flags.Flag.SEEN, isSuccess);
                     }
+                    messagesToBeProcessed.add(message);
+                    LOG.info("Message with massageId " +
+                            getHeaderValue(message.getAllHeaders(), MESSAGE_ID_HEADER_KEY) +
+                            " added to message processing list.");
                 }
-                messagesToBeProcessed.add(message);
-                LOG.info("Message with massageId " +
-                        getHeaderValue(message.getAllHeaders(), MESSAGE_ID_HEADER_KEY) +
-                        " added to message processing list.");
             }
 
         } catch (NoSuchProviderException e) {
@@ -109,7 +113,14 @@ public class NihmsEmailService {
         return messagesToBeProcessed;
     }
 
-        List<NihmsSubmissionMessage> processMessage(Message message) {
+    /**
+     * Procss an email message by parsing it to generate one submission message for each submission mentioned in
+     * the email.
+     *
+     * @param message the email message to process
+     * @return a List of SubmissionMessages to be put in a message queue
+     */
+    List<NihmsSubmissionMessage> processMessage(Message message) {
         List<NihmsSubmissionMessage> submissionMessageList = new ArrayList<>();
         try {
             Object content = message.getContent();
@@ -162,6 +173,16 @@ public class NihmsEmailService {
         return submissionMessageList;
     }
 
+    /**
+     * A method to generate a Nihms submission message from an email message and an info string parsed from the email
+     * This method may be called several times on the same email message if there are several submissions contained in the
+     * email. The email is passed in to populate fields on the Nihms submission message to be created.
+     *
+     * @param message the email message being processed
+     * @param info the info string parsed from the email
+     * @return a new submission message correspomding to this email and info string
+     * @throws MessagingException
+     */
     private NihmsSubmissionMessage formSubmissionMessage(Message message, String info) throws MessagingException {
         NihmsSubmissionMessage sm = new NihmsSubmissionMessage();
         sm.setMessageId(getHeaderValue(message.getAllHeaders(), MESSAGE_ID_HEADER_KEY));
